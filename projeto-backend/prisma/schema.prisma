@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id             Int           @id @default(autoincrement())
+  nome           String
+  email          String        @unique
+  senha          String
+  cargo          String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  manutencoes    Manutencao[]
+}
+
+model Unidade {
+  id             Int           @id @default(autoincrement())
+  nome           String
+  endereco       String?
+  telefone       String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  equipamentos   Equipamento[]
+}
+
+model Categoria {
+  id             Int           @id @default(autoincrement())
+  nome           String        @unique
+  descricao      String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  equipamentos   Equipamento[]
+}
+
+model Equipamento {
+  id                Int           @id @default(autoincrement())
+  numeroSerie       String        @unique
+  nome              String
+  marca             String
+  modelo            String
+  dataAquisicao     DateTime
+  valorAquisicao    Float?
+  status            String        // Ativo, Em manutenção, Inativo, Descartado
+  garantiaAte       DateTime?
+  foto              String?
+  manual            String?
+  descricao         String?
+  especificacoes    String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  categoriaId       Int
+  categoria         Categoria     @relation(fields: [categoriaId], references: [id])
+  unidadeId         Int
+  unidade           Unidade       @relation(fields: [unidadeId], references: [id])
+  manutencoes       Manutencao[]
+  alertas           Alerta[]
+}
+
+model Manutencao {
+  id                    Int           @id @default(autoincrement())
+  tipo                  String        // Preventiva, Corretiva
+  status                String        // Concluída, Em andamento, Agendada, Cancelada
+  dataRealizacao        DateTime
+  dataProximaManutencao DateTime?
+  tecnicoResponsavelId  Int
+  tecnicoResponsavel    Usuario       @relation(fields: [tecnicoResponsavelId], references: [id])
+  tempoServico          Int?          // Em minutos
+  custo                 Float?
+  pecasSubstituidas     String?
+  descricaoServico      String
+  observacoes           String?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  equipamentoId         Int
+  equipamento           Equipamento   @relation(fields: [equipamentoId], references: [id])
+  alerta                Alerta?
+}
+
+model Alerta {
+  id                Int           @id @default(autoincrement())
+  dataAlerta        DateTime
+  status            String        // Pendente, Concluído, Cancelado
+  mensagem          String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  equipamentoId     Int
+  equipamento       Equipamento   @relation(fields: [equipamentoId], references: [id])
+  manutencaoId      Int?          @unique
+  manutencao        Manutencao?   @relation(fields: [manutencaoId], references: [id])
+}
