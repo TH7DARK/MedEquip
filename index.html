@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gerenciamento de Equipamentos Médicos</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #f3f4f6;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --background-color: #f9fafb;
+            --card-color: #ffffff;
+        }
+        
+        .dark {
+            --primary-color: #60a5fa;
+            --primary-dark: #3b82f6;
+            --secondary-color: #374151;
+            --text-color: #f3f4f6;
+            --light-text: #d1d5db;
+            --border-color: #4b5563;
+            --success-color: #34d399;
+            --warning-color: #fbbf24;
+            --danger-color: #f87171;
+            --background-color: #1f2937;
+            --card-color: #111827;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-left: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a svg {
+            margin-right: 5px;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            background-color: rgba(59, 130, 246, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .feature-icon svg {
+            color: var(--primary-color);
+        }
+        
+        .feature-card h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        
+        .feature-card p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .cta-section h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        .cta-section p {
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn svg {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .card {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: rgba(59, 130, 246, 0.1);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .badge-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px 0 0 4px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+        }
+        
+        .search-bar button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--light-text);
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .chart-container {
+            background-color: var(--card-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-container h3 {
+            margin-top: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .chart {
+            height: 300px;
+            background-color: rgba(59, 130, 246, 0.05);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        footer {
+            background-color: var(--card-color);
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-info {
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .footer-links div {
+            min-width: 120px;
+        }
+        
+        .footer-links h4 {
+            margin-top: 0;
+            font-size: 1rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-text);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+                margin-left: 0;
+            }
+            
+            .mobile-menu-button {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+                <span>MedEquip</span>
+            </div>
+            
+            <button class="mobile-menu-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#inicio">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Início
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#equipamentos">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            Equipamentos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#manutencoes">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="7"></circle>
+                                <polyline points="12 9 12 12 13.5 13.5"></polyline>
+                                <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>
+                            </svg>
+                            Manutenções
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#dashboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="20" x2="18" y2="10"></line>
+                                <line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#alertas">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            Alertas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#configuracoes">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                            </svg>
+                            Configurações
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container">
+            <section id="inicio" class="hero">
+                <h1>Sistema de Gerenciamento de Equipamentos Médicos</h1>
+                <p>Gerencie seus equipamentos médicos, registre manutenções preventivas e corretivas, e receba alertas para manutenções programadas.</p>
+                <a href="#equipamentos" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Começar Agora
+                </a>
+            </section>
+            
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Cadastro de Equipamentos</h3>
+                    <p>Registre informações detalhadas sobre cada equipamento médico em sua instituição.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="7"></circle>
+                            <polyline points="12 9 12 12 13.5 13.5"></polyline>
+                            <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>
+                        </svg>
+                    </div>
+                    <h3>Registro de Manutenções</h3>
+                    <p>Documente manutenções preventivas e corretivas com todos os detalhes necessários.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <h3>Dashboard Analítico</h3>
+                    <p>Visualize estatísticas e relatórios sobre seus equipamentos e manutenções.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <h3>Sistema de Alertas</h3>
+                    <p>Receba notificações sobre manutenções preventivas programadas.</p>
+                </div>
+            </section>
+            
+            <section class="cta-section">
+                <h2>Comece agora mesmo</h2>
+                <p>Cadastre seu primeiro equipamento médico e comece a gerenciar suas manutenções.</p>
+                <a href="#equipamentos" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Novo Equipamento
+                </a>
+            </section>
+            
+            <section id="equipamentos" class="card">
+                <h2>Equipamentos Médicos</h2>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar por número de série, marca, modelo...">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="filters">
+                    <select class="filter-select">
+                        <option value="Todos">Todos os status</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Em manutenção">Em manutenção</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                    
+                    <a href="#novo-equipamento" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Novo Equipamento
+                    </a>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nº Série</th>
+                                <th>Marca/Modelo</th>
+                                <th>Unidade</th>
+                                <th>Cidade</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MED-2025-001</td>
+                                <td>
+                                    <div>Phillips</div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">Teste</div>
+                                </td>
+                                <td>UTI Central</td>
+                                <td>São Paulo</td>
+                                <td><span class="badge badge-success">Ativo</span></td>
+                                <td>
+                                    <a href="#detalhes" style="color: var(--primary-color); margin-right: 10px;">Detalhes</a>
+                                    <a href="#editar" style="color: var(--primary-color);">Editar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MED-2025-002</td>
+                                <td>
+                                    <div>GE Healthcare</div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">Teste</div>
+                                </td>
+                                <td>Cardiologia</td>
+                                <td>Rio de Janeiro</td>
+                                <td><span class="badge badge-warning">Em manutenção</span></td>
+                                <td>
+                                    <a href="#detalhes" style="color: var(--primary-color); margin-right: 10px;">Detalhes</a>
+                                    <a href="#editar" style="color: var(--primary-color);">Editar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MED-2025-003</td>
+                                <td>
+                                    <div>Siemens</div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">Tomógrafo Somatom</div>
+                                </td>
+                                <td>Radiologia</td>
+                                <td>Belo Horizonte</td>
+                                <td><span class="badge badge-success">Ativo</span></td>
+                                <td>
+                                    <a href="#detalhes" style="color: var(--primary-color); margin-right: 10px;">Detalhes</a>
+                                    <a href="#editar" style="color: var(--primary-color);">Editar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section id="novo-equipamento" class="card">
+                <h2>Novo Equipamento</h2>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="numero_serie">Número de Série *</label>
+                        <input type="text" id="numero_serie" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nota_fiscal">Nota Fiscal</label>
+                        <input type="text" id="nota_fiscal" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="marca">Marca *</label>
+                        <input type="text" id="marca" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" id="modelo" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unidade">Unidade *</label>
+                        <input type="text" id="unidade" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cidade">Cidade *</label>
+                        <input type="text" id="cidade" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefone_suporte">Telefone para Suporte</label>
+                        <input type="tel" id="telefone_suporte" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" class="form-control" required>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Em manutenção">Em manutenção</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="data_aquisicao">Data de Aquisição</label>
+                        <input type="date" id="data_aquisicao" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="garantia_ate">Garantia até</label>
+                        <input type="date" id="garantia_ate" class="form-control">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <button type="button" class="btn btn-secondary" style="margin-right: 10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            Buscar Informações
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="btn">Salvar</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section id="manutencoes" class="card">
+                <h2>Manutenções</h2>
+                
+                <div class="filters">
+                    <select class="filter-select">
+                        <option value="Todos">Todos os tipos</option>
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Corretiva">Corretiva</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option value="Todos">Todos os status</option>
+                        <option value="Concluída">Concluída</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Agendada">Agendada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                    
+                    <a href="#nova-manutencao" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Nova Manutenção
+                    </a>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Equipamento</th>
+                                <th>Tipo</th>
+                                <th>Data Realização</th>
+                                <th>Próxima Manutenção</th>
+                                <th>Técnico</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>Phillips </div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">MED-2025-001</div>
+                                </td>
+                                <td><span class="badge badge-success">Preventiva</span></td>
+                                <td>15/03/2025</td>
+                                <td>15/09/2025</td>
+                                <td>Carlos Silva</td>
+                                <td><span class="badge badge-success">Concluída</span></td>
+                                <td>
+                                    <a href="#detalhes" style="color: var(--primary-color); margin-right: 10px;">Detalhes</a>
+                                    <a href="#editar" style="color: var(--primary-color);">Editar</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>GE Healthcare Monitor Cardíaco</div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">MED-2025-002</div>
+                                </td>
+                                <td><span class="badge badge-warning">Corretiva</span></td>
+                                <td>10/04/2025</td>
+                                <td>-</td>
+                                <td>Ciro</td>
+                                <td><span class="badge badge-warning">Em andamento</span></td>
+                                <td>
+                                    <a href="#detalhes" style="color: var(--primary-color); margin-right: 10px;">Detalhes</a>
+                                    <a href="#editar" style="color: var(--primary-color);">Editar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section id="dashboard" class="card">
+                <h2>Dashboard</h2>
+                
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Total de Equipamentos</h3>
+                        <div class="value">42</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Equipamentos Ativos</h3>
+                        <div class="value">36</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Em Manutenção</h3>
+                        <div class="value">5</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <h3>Manutenções no Mês</h3>
+                        <div class="value">12</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Distribuição de Equipamentos por Status</h3>
+                    <div class="chart">
+                        <svg width="300" height="200" viewBox="0 0 300 200">
+                            <rect x="50" y="20" width="50" height="160" fill="#3b82f6"></rect>
+                            <rect x="120" y="100" width="50" height="80" fill="#f59e0b"></rect>
+                            <rect x="190" y="160" width="50" height="20" fill="#ef4444"></rect>
+                            <text x="75" y="190" text-anchor="middle" fill="var(--text-color)">Ativo</text>
+                            <text x="145" y="190" text-anchor="middle" fill="var(--text-color)">Em manutenção</text>
+                            <text x="215" y="190" text-anchor="middle" fill="var(--text-color)">Inativo</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>Manutenções Realizadas por Mês</h3>
+                    <div class="chart">
+                        <svg width="500" height="200" viewBox="0 0 500 200">
+                            <polyline points="50,180 100,120 150,150 200,80 250,100 300,60 350,90 400,40" fill="none" stroke="#3b82f6" stroke-width="3"></polyline>
+                            <line x1="50" y1="180" x2="450" y2="180" stroke="var(--border-color)" stroke-width="1"></line>
+                            <text x="50" y="195" text-anchor="middle" fill="var(--text-color)">Jan</text>
+                            <text x="100" y="195" text-anchor="middle" fill="var(--text-color)">Fev</text>
+                            <text x="150" y="195" text-anchor="middle" fill="var(--text-color)">Mar</text>
+                            <text x="200" y="195" text-anchor="middle" fill="var(--text-color)">Abr</text>
+                            <text x="250" y="195" text-anchor="middle" fill="var(--text-color)">Mai</text>
+                            <text x="300" y="195" text-anchor="middle" fill="var(--text-color)">Jun</text>
+                            <text x="350" y="195" text-anchor="middle" fill="var(--text-color)">Jul</text>
+                            <text x="400" y="195" text-anchor="middle" fill="var(--text-color)">Ago</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="alertas" class="card">
+                <h2>Alertas de Manutenção</h2>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Equipamento</th>
+                                <th>Tipo</th>
+                                <th>Data Prevista</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>Phillips </div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">MED-2025-001</div>
+                                </td>
+                                <td><span class="badge badge-success">Preventiva</span></td>
+                                <td>15/09/2025</td>
+                                <td><span class="badge badge-warning">Pendente</span></td>
+                                <td>
+                                    <a href="#marcar-concluido" style="color: var(--primary-color); margin-right: 10px;">Marcar como Concluído</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>Siemens Tomógrafo Somatom</div>
+                                    <div style="font-size: 0.8rem; color: var(--light-text);">MED-2025-003</div>
+                                </td>
+                                <td><span class="badge badge-success">Preventiva</span></td>
+                                <td>30/06/2025</td>
+                                <td><span class="badge badge-warning">Pendente</span></td>
+                                <td>
+                                    <a href="#marcar-concluido" style="color: var(--primary-color); margin-right: 10px;">Marcar como Concluído</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <section id="configuracoes" class="card">
+                <h2>Configurações</h2>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3>Preferências do Sistema</h3>
+                    <p style="color: var(--light-text);">Configure suas preferências para personalizar sua experiência com o sistema.</p>
+                    
+                    <div style="margin-top: 20px;">
+                        <h4>Tema</h4>
+                        <p style="color: var(--light-text); margin-bottom: 10px;">Você pode alternar entre o tema claro e escuro usando o botão no canto inferior direito da tela.</p>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h4>Notificações</h4>
+                        <div style="display: flex; align-items: center;">
+                            <input type="checkbox" id="notifications" style="margin-right: 10px;">
+                            <label for="notifications">Receber notificações de alertas de manutenção</label>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h4>Idioma</h4>
+                        <select class="form-control" style="max-width: 300px;">
+                            <option value="pt-BR">Português (Brasil)</option>
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>Sobre o Sistema</h3>
+                    <div style="margin-top: 10px;">
+                        <p><strong>Nome:</strong> Sistema de Gerenciamento de Equipamentos Médicos</p>
+                        <p><strong>Versão:</strong> 1.0.0</p>
+                        <p><strong>Desenvolvido por:</strong> Thiago H</p>
+                        <p><strong>Contato:</strong> suporte@exemplo.com</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <div class="logo" style="margin-bottom: 10px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span>MedEquip Manager</span>
+                    </div>
+                    <p style="color: var(--light-text);">Sistema completo para gerenciamento de equipamentos médicos, manutenções e alertas.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div>
+                        <h4>Navegação</h4>
+                        <ul>
+                            <li><a href="#inicio">Início</a></li>
+                            <li><a href="#equipamentos">Equipamentos</a></li>
+                            <li><a href="#manutencoes">Manutenções</a></li>
+                            <li><a href="#dashboard">Dashboard</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4>Recursos</h4>
+                        <ul>
+                            <li><a href="#alertas">Alertas</a></li>
+                            <li><a href="#configuracoes">Configurações</a></li>
+                            <li><a href="manual_usuario.html">Manual do Usuário</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4>Suporte</h4>
+                        <ul>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Termos de Uso</a></li>
+                            <li><a href="#">Política de Privacidade</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 MedEquip Manager. Todos os direitos reservados. TH</p>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="theme-toggle" id="theme-toggle">
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: block;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </div>
+    
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const nav = document.querySelector('nav');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIcon = document.getElementById('sun-icon');
+        
+        // Check for saved theme preference or use device preference
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark');
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        }
+        
+        // Toggle theme when button is clicked
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            
+            if (document.body.classList.contains('dark')) {
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>

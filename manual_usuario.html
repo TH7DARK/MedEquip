@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual do Usuário - Sistema de Gerenciamento de Equipamentos Médicos</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary-color: #f3f4f6;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            font-size: 1.2em;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
+        
+        code {
+            background-color: var(--secondary-color);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        .toc {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 8px;
+        }
+        
+        .toc a {
+            display: block;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .toc a:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            text-decoration: none;
+        }
+        
+        .feature {
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .feature h3 {
+            margin-top: 0;
+        }
+        
+        .tip {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tip h4 {
+            color: var(--success-color);
+            margin-top: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--light-text);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manual do Usuário - Sistema de Gerenciamento de Equipamentos Médicos</h1>
+        
+        <div class="toc">
+            <h2>Índice</h2>
+            <ul>
+                <li><a href="#introducao">1. Introdução</a></li>
+                <li><a href="#acesso">2. Acesso ao Sistema</a></li>
+                <li><a href="#visao-geral">3. Visão Geral do Sistema</a></li>
+                <li><a href="#navegacao">4. Navegação Principal</a></li>
+                <li><a href="#guia-uso">5. Guia de Uso</a>
+                    <ul>
+                        <li><a href="#dark-mode">5.1. Alternando entre Temas (Dark Mode)</a></li>
+                        <li><a href="#cadastro-equipamentos">5.2. Cadastro de Equipamentos</a></li>
+                        <li><a href="#registro-manutencoes">5.3. Registro de Manutenções</a></li>
+                        <li><a href="#dashboard">5.4. Dashboard</a></li>
+                        <li><a href="#sistema-alertas">5.5. Sistema de Alertas</a></li>
+                        <li><a href="#busca-automatica">5.6. Busca Automática de Informações</a></li>
+                        <li><a href="#configuracoes">5.7. Configurações</a></li>
+                    </ul>
+                </li>
+                <li><a href="#dicas">6. Dicas e Boas Práticas</a></li>
+                <li><a href="#suporte">7. Suporte Técnico</a></li>
+            </ul>
+        </div>
+        
+        <section id="introducao">
+            <h2>1. Introdução</h2>
+            <p>Bem-vindo ao Sistema de Gerenciamento de Equipamentos Médicos, uma plataforma completa para cadastro, monitoramento e manutenção de equipamentos médicos. Este manual fornecerá todas as informações necessárias para utilizar o sistema de forma eficiente.</p>
+        </section>
+        
+        <section id="acesso">
+            <h2>2. Acesso ao Sistema</h2>
+            <p>O sistema está disponível através do seguinte link:<br>
+            <a href="http://3002-ijm7q3ogavuank56ch1cq-2282bb6d.manus.computer" target="_blank">http://3002-ijm7q3ogavuank56ch1cq-2282bb6d.manus.computer</a></p>
+        </section>
+        
+        <section id="visao-geral">
+            <h2>3. Visão Geral do Sistema</h2>
+            <p>O Sistema de Gerenciamento de Equipamentos Médicos oferece as seguintes funcionalidades principais:</p>
+            
+            <div class="feature">
+                <h3>Cadastro de Equipamentos Médicos</h3>
+                <p>Registre informações detalhadas sobre cada equipamento, incluindo nota fiscal, unidade, cidade, número de série, telefone para suporte e marca.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>Registro de Manutenções</h3>
+                <p>Documente manutenções preventivas e corretivas, incluindo técnico responsável, peças substituídas e tempo de serviço.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>Dashboard</h3>
+                <p>Visualize estatísticas e relatórios sobre seus equipamentos e manutenções.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>Sistema de Alertas</h3>
+                <p>Receba notificações sobre manutenções preventivas programadas.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>Busca Automática de Informações</h3>
+                <p>Utilize a IA integrada para buscar automaticamente fotos e manuais dos equipamentos.</p>
+            </div>
+            
+            <div class="feature">
+                <h3>Dark Mode</h3>
+                <p>Alterne entre os temas claro e escuro para uma experiência visual personalizada.</p>
+            </div>
+        </section>
+        
+        <section id="navegacao">
+            <h2>4. Navegação Principal</h2>
+            <p>A navegação principal do sistema está localizada no topo da página e inclui os seguintes itens:</p>
+            <ul>
+                <li><strong>Início</strong>: Página inicial com acesso rápido a todas as funcionalidades.</li>
+                <li><strong>Equipamentos</strong>: Lista de equipamentos cadastrados e opção para adicionar novos.</li>
+                <li><strong>Manutenções</strong>: Registro e histórico de manutenções.</li>
+                <li><strong>Dashboard</strong>: Visualização de estatísticas e relatórios.</li>
+                <li><strong>Alertas</strong>: Gerenciamento de alertas para manutenções programadas.</li>
+                <li><strong>Configurações</strong>: Configurações do sistema e preferências de tema.</li>
+            </ul>
+        </section>
+        
+        <section id="guia-uso">
+            <h2>5. Guia de Uso</h2>
+            
+            <section id="dark-mode">
+                <h3>5.1. Alternando entre Temas (Dark Mode)</h3>
+                <p>O sistema oferece dois temas visuais: claro (padrão) e escuro (Dark Mode).</p>
+                <p>Para alternar entre os temas:</p>
+                <ol>
+                    <li>Localize o botão de alternância de tema no canto inferior direito da tela.</li>
+                    <li>Clique no ícone de lua (🌙) para ativar o Dark Mode.</li>
+                    <li>Clique no ícone de sol (☀️) para retornar ao tema claro.</li>
+                </ol>
+                <p>Sua preferência de tema será salva automaticamente e mantida entre sessões.</p>
+            </section>
+            
+            <section id="cadastro-equipamentos">
+                <h3>5.2. Cadastro de Equipamentos</h3>
+                
+                <h4>5.2.1. Adicionar Novo Equipamento</h4>
+                <ol>
+                    <li>Clique em "Equipamentos" na navegação principal.</li>
+                    <li>Clique no botão "Novo Equipamento".</li>
+                    <li>Preencha o formulário com as informações do equipamento:
+                        <ul>
+                            <li><strong>Número de Série</strong>: Identificador único do equipamento (obrigatório).</li>
+                            <li><strong>Nota Fiscal</strong>: Número da nota fiscal de aquisição.</li>
+                            <li><strong>Marca</strong>: Fabricante do equipamento (obrigatório).</li>
+                            <li><strong>Modelo</strong>: Modelo específico do equipamento.</li>
+                            <li><strong>Unidade</strong>: Local onde o equipamento está instalado (obrigatório).</li>
+                            <li><strong>Cidade</strong>: Cidade onde o equipamento está localizado (obrigatório).</li>
+                            <li><strong>Telefone para Suporte</strong>: Contato para assistência técnica.</li>
+                            <li><strong>Status</strong>: Estado atual do equipamento (Ativo, Em manutenção, Inativo).</li>
+                            <li><strong>Data de Aquisição</strong>: Data de compra do equipamento.</li>
+                            <li><strong>Garantia até</strong>: Data de validade da garantia.</li>
+                        </ul>
+                    </li>
+                    <li>Utilize a função "Buscar Informações" para obter automaticamente:
+                        <ul>
+                            <li>Foto do equipamento</li>
+                            <li>Manual do usuário</li>
+                            <li>Descrição e especificações técnicas</li>
+                        </ul>
+                    </li>
+                    <li>Clique em "Salvar" para registrar o equipamento.</li>
+                </ol>
+                
+                <h4>5.2.2. Visualizar e Editar Equipamentos</h4>
+                <ol>
+                    <li>Acesse a página "Equipamentos" para ver a lista de todos os equipamentos cadastrados.</li>
+                    <li>Utilize os filtros para encontrar equipamentos específicos por status ou termo de busca.</li>
+                    <li>Clique em "Detalhes" para visualizar informações completas sobre um equipamento.</li>
+                    <li>Clique em "Editar" para modificar as informações de um equipamento.</li>
+                </ol>
+            </section>
+            
+            <section id="registro-manutencoes">
+                <h3>5.3. Registro de Manutenções</h3>
+                
+                <h4>5.3.1. Adicionar Nova Manutenção</h4>
+                <ol>
+                    <li>Existem duas formas de registrar uma manutenção:
+                        <ul>
+                            <li>A partir da página "Manutenções", clicando em "Nova Manutenção".</li>
+                            <li>A partir da página de detalhes de um equipamento, clicando em "Registrar Manutenção".</li>
+                        </ul>
+                    </li>
+                    <li>Preencha o formulário com as informações da manutenção:
+                        <ul>
+                            <li><strong>Tipo de Manutenção</strong>: Preventiva ou Corretiva (obrigatório).</li>
+                            <li><strong>Status</strong>: Estado da manutenção (Concluída, Em andamento, Agendada, Cancelada).</li>
+                            <li><strong>Data de Realização</strong>: Data em que a manutenção foi ou será realizada (obrigatório).</li>
+                            <li><strong>Data da Próxima Manutenção</strong>: Data programada para a próxima manutenção.</li>
+                            <li><strong>Técnico Responsável</strong>: Nome do técnico que realizou o serviço (obrigatório).</li>
+                            <li><strong>Tempo de Serviço</strong>: Duração do serviço em minutos.</li>
+                            <li><strong>Custo</strong>: Valor gasto com a manutenção.</li>
+                            <li><strong>Peças Substituídas</strong>: Lista de peças que foram trocadas durante a manutenção.</li>
+                            <li><strong>Descrição do Serviço</strong>: Detalhamento do serviço realizado (obrigatório).</li>
+                            <li><strong>Observações Adicionais</strong>: Informações complementares sobre a manutenção.</li>
+                        </ul>
+                    </li>
+                    <li>Se uma data for definida para a próxima manutenção, um alerta será criado automaticamente.</li>
+                    <li>Clique em "Salvar" para registrar a manutenção.</li>
+                </ol>
+                
+                <h4>5.3.2. Visualizar e Editar Manutenções</h4>
+                <ol>
+                    <li>Acesse a página "Manutenções" para ver o histórico de todas as manutenções.</li>
+                    <li>Utilize os filtros para encontrar manutenções específicas por tipo ou status.</li>
+                    <li>Clique em "Detalhes" para visualizar informações completas sobre uma manutenção.</li>
+                    <li>Clique em "Editar" para modificar as informações de uma manutenção.</li>
+                </ol>
+            </section>
+            
+            <section id="dashboard">
+                <h3>5.4. Dashboard</h3>
+                <ol>
+                    <li>Acesse a página "Dashboard" para visualizar estatísticas e gráficos sobre:
+                        <ul>
+                            <li>Distribuição de equipamentos por status</li>
+                            <li>Manutenções realizadas por mês</li>
+                            <li>Custos de manutenção</li>
+                            <li>Equipamentos que mais necessitam de manutenção</li>
+                        </ul>
+                    </li>
+                    <li>Utilize os filtros para ajustar o período de análise dos dados.</li>
+                </ol>
+            </section>
+            
+            <section id="sistema-alertas">
+                <h3>5.5. Sistema de Alertas</h3>
+                <ol>
+                    <li>Acesse a página "Alertas" para visualizar todas as manutenções programadas.</li>
+                    <li>Os alertas são criados automaticamente quando uma data é definida para a próxima manutenção.</li>
+                    <li>Cada alerta exibe:
+                        <ul>
+                            <li>Equipamento relacionado</li>
+                            <li>Tipo de manutenção programada</li>
+                            <li>Data prevista</li>
+                            <li>Status (Pendente, Concluído, Cancelado)</li>
+                        </ul>
+                    </li>
+                    <li>Você pode marcar um alerta como concluído ou cancelado conforme necessário.</li>
+                </ol>
+            </section>
+            
+            <section id="busca-automatica">
+                <h3>5.6. Busca Automática de Informações</h3>
+                <ol>
+                    <li>Durante o cadastro ou edição de um equipamento, preencha os campos de marca e modelo.</li>
+                    <li>Clique no botão "Buscar Informações" para que o sistema utilize IA para encontrar:
+                        <ul>
+                            <li>Foto do equipamento</li>
+                            <li>Manual do usuário</li>
+                            <li>Descrição e especificações técnicas</li>
+                        </ul>
+                    </li>
+                    <li>As informações encontradas serão exibidas na tela e podem ser salvas junto com o cadastro do equipamento.</li>
+                </ol>
+            </section>
+            
+            <section id="configuracoes">
+                <h3>5.7. Configurações</h3>
+                <ol>
+                    <li>Acesse a página "Configurações" para personalizar sua experiência com o sistema.</li>
+                    <li>Nesta página você pode:
+                        <ul>
+                            <li>Ver informações sobre o tema atual (claro ou escuro)</li>
+                            <li>Configurar preferências de notificações</li>
+                            <li>Selecionar o idioma do sistema</li>
+                            <li>Visualizar informações sobre a versão do sistema</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </section>
+        
+        <section id="dicas">
+            <h2>6. Dicas e Boas Práticas</h2>
+            
+            <div class="tip">
+                <h4>Mantenha os registros atualizados</h4>
+                <p>Atualize regularmente o status dos equipamentos e registre todas as manutenções realizadas.</p>
+            </div>
+            
+            <div class="tip">
+                <h4>Utilize a busca automática</h4>
+                <p>A função de busca automática de informações economiza tempo e garante dados mais precisos sobre os equipamentos.</p>
+            </div>
+            
+            <div class="tip">
+                <h4>Programe manutenções preventivas</h4>
+                <p>Utilize o sistema de alertas para programar manutenções preventivas regulares, aumentando a vida útil dos equipamentos.</p>
+            </div>
+            
+            <div class="tip">
+                <h4>Documente detalhadamente as manutenções</h4>
+                <p>Registre com detalhes todas as atividades realizadas durante as manutenções, incluindo peças substituídas e observações relevantes.</p>
+            </div>
+            
+            <div class="tip">
+                <h4>Consulte o dashboard regularmente</h4>
+                <p>Utilize as estatísticas e relatórios do dashboard para identificar tendências e tomar decisões baseadas em dados.</p>
+            </div>
+            
+            <div class="tip">
+                <h4>Personalize o tema conforme sua preferência</h4>
+                <p>Utilize o Dark Mode em ambientes com pouca luz para reduzir o cansaço visual ou simplesmente de acordo com sua preferência estética.</p>
+            </div>
+        </section>
+        
+        <section id="suporte">
+            <h2>7. Suporte Técnico</h2>
+            <p>Em caso de dúvidas ou problemas com o sistema, entre em contato com o suporte técnico.</p>
+        </section>
+        
+        <div class="footer">
+            <p>Esperamos que este manual ajude você a utilizar o Sistema de Gerenciamento de Equipamentos Médicos de forma eficiente.</p>
+            <p>Obrigado por escolher nossa solução!</p>
+            <p>&copy; 2025 MedEquip Manager. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>
