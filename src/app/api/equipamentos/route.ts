@@ -1,34 +1,29 @@
+// Este arquivo foi substituído pela implementação real do backend
+// As rotas de API agora são servidas pelo backend em http://localhost:3001/api
+// Veja src/lib/api.ts para as funções de chamada à API
+
 import { NextResponse } from 'next/server';
-import type { Equipamento } from '@/lib/contexts/EquipamentoContext';
 
-let db: Equipamento[] = [];
-
-// GET /api/equipamentos
 export async function GET() {
-  return NextResponse.json(db);
+  return NextResponse.json({ 
+    message: "Esta API simulada foi desativada. Use o backend real em http://localhost:3001/api/equipment" 
+  }, { status: 308 });
 }
 
-// POST /api/equipamentos
-export async function POST(request: Request) {
-  const equipamento: Equipamento = await request.json();
-  const newId = db.length > 0 ? Math.max(...db.map(e => e.id!)) + 1 : 1;
-  const newEq = { ...equipamento, id: newId, created_at: new Date().toISOString() };
-  db.push(newEq);
-  return NextResponse.json(newEq, { status: 201 });
+export async function POST() {
+  return NextResponse.json({ 
+    message: "Esta API simulada foi desativada. Use o backend real em http://localhost:3001/api/equipment" 
+  }, { status: 308 });
 }
 
-// PUT /api/equipamentos
-export async function PUT(request: Request) {
-  const equipamento: Equipamento = await request.json();
-  const idx = db.findIndex(e => e.id === equipamento.id);
-  if (idx === -1) return NextResponse.json({ error: 'Não encontrado' }, { status: 404 });
-  db[idx] = { ...equipamento, updated_at: new Date().toISOString() };
-  return NextResponse.json(db[idx]);
+export async function PUT() {
+  return NextResponse.json({ 
+    message: "Esta API simulada foi desativada. Use o backend real em http://localhost:3001/api/equipment" 
+  }, { status: 308 });
 }
 
-// DELETE /api/equipamentos
-export async function DELETE(request: Request) {
-  const { id } = await request.json();
-  db = db.filter(e => e.id !== id);
-  return NextResponse.json({ success: true });
+export async function DELETE() {
+  return NextResponse.json({ 
+    message: "Esta API simulada foi desativada. Use o backend real em http://localhost:3001/api/equipment" 
+  }, { status: 308 });
 }
