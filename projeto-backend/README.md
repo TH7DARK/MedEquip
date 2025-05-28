@@ -1,182 +1,237 @@
-# Documentação do Backend para Sistema de Equipamentos Médicos
+# Instruções de Uso - Backend do Sistema de Gerenciamento de Equipamentos Médicos
 
-## Visão Geral
+Este documento contém instruções para configurar, executar e integrar o backend do Sistema de Gerenciamento de Equipamentos Médicos com o frontend existente.
 
-Este documento descreve a implementação do backend para o Sistema de Gerenciamento de Equipamentos Médicos, desenvolvido com Node.js, Express, TypeScript e PostgreSQL.
+## Requisitos
 
-## Tecnologias Utilizadas
-
-- **Node.js**: Ambiente de execução JavaScript
-- **Express**: Framework web para Node.js
-- **TypeScript**: Superset tipado de JavaScript
-- **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional
-- **Prisma ORM**: ORM (Object-Relational Mapping) para acesso ao banco de dados
-- **JWT**: Autenticação baseada em tokens
-- **OpenAI API**: Integração para funcionalidades de IA
-- **Telegram/WhatsApp API**: Integração para sistema de alertas
-- **Jest**: Framework de testes
-- **Swagger**: Documentação da API
+- Node.js (versão 16 ou superior)
+- npm ou pnpm
+- SQLite (para desenvolvimento local) ou Cloudflare D1 (para produção)
 
 ## Estrutura do Projeto
 
-```
-projeto-backend/
-├── prisma/
-│   ├── schema.prisma    # Esquema do banco de dados
-│   └── migrations/      # Migrações do banco de dados
-├── src/
-│   ├── controllers/     # Controladores da API
-│   ├── middlewares/     # Middlewares (autenticação, tratamento de erros)
-│   ├── models/          # Modelos de dados
-│   ├── routes/          # Rotas da API
-│   ├── services/        # Serviços (IA, alertas)
-│   ├── utils/           # Utilitários
-│   ├── tests/           # Testes automatizados
-│   └── index.ts         # Ponto de entrada da aplicação
-├── .env                 # Variáveis de ambiente
-├── package.json         # Dependências e scripts
-└── tsconfig.json        # Configuração do TypeScript
-```
-
-## Modelos de Dados
-
-O sistema utiliza os seguintes modelos de dados:
-
-1. **Usuario**: Armazena informações dos usuários do sistema
-2. **Unidade**: Representa as unidades onde os equipamentos estão localizados
-3. **Categoria**: Categorias de equipamentos médicos
-4. **Equipamento**: Informações detalhadas sobre os equipamentos médicos
-5. **Manutencao**: Registros de manutenções preventivas e corretivas
-6. **Alerta**: Sistema de alertas para manutenções programadas
-
-## Endpoints da API
-
-### Autenticação
-
-- `POST /api/auth/register`: Registra um novo usuário
-- `POST /api/auth/login`: Autentica um usuário e retorna um token JWT
-- `GET /api/auth/profile`: Retorna o perfil do usuário autenticado
-
-### Equipamentos
-
-- `GET /api/equipamentos`: Lista todos os equipamentos
-- `GET /api/equipamentos/:id`: Retorna detalhes de um equipamento específico
-- `POST /api/equipamentos`: Cadastra um novo equipamento
-- `PUT /api/equipamentos/:id`: Atualiza informações de um equipamento
-- `DELETE /api/equipamentos/:id`: Remove um equipamento
-
-### Manutenções
-
-- `GET /api/manutencoes`: Lista todas as manutenções
-- `GET /api/manutencoes/:id`: Retorna detalhes de uma manutenção específica
-- `POST /api/manutencoes`: Registra uma nova manutenção
-- `PUT /api/manutencoes/:id`: Atualiza informações de uma manutenção
-- `DELETE /api/manutencoes/:id`: Remove uma manutenção
-
-### Alertas
-
-- `GET /api/alertas`: Lista todos os alertas
-- `GET /api/alertas/pendentes`: Lista alertas pendentes
-- `GET /api/alertas/:id`: Retorna detalhes de um alerta específico
-- `POST /api/alertas`: Cria um novo alerta
-- `PUT /api/alertas/:id`: Atualiza informações de um alerta
-- `DELETE /api/alertas/:id`: Remove um alerta
-
-### Dashboard
-
-- `GET /api/dashboard`: Retorna dados estatísticos para o dashboard
-
-### Notificações
-
-- `POST /api/notificacoes/enviar`: Aciona o envio de alertas manualmente
-
-### IA
-
-- `POST /api/ia/solucoes`: Busca soluções para problemas de equipamentos
-- `POST /api/ia/informacoes-equipamento`: Busca informações sobre equipamentos
-
-## Funcionalidades Principais
-
-### Sistema de Alertas
-
-O sistema inclui um mecanismo de alertas para manutenções preventivas programadas:
-
-- Alertas são criados automaticamente quando uma próxima manutenção é agendada
-- Um agendador verifica diariamente os alertas pendentes para o dia seguinte
-- Notificações são enviadas via Telegram e WhatsApp com 1 dia de antecedência
-
-### Funcionalidade de IA
-
-O sistema utiliza a OpenAI API para:
-
-- Buscar soluções para problemas relatados em equipamentos
-- Obter informações detalhadas sobre equipamentos médicos (descrição, especificações, manuais)
-
-## Configuração e Execução
-
-### Requisitos
-
-- Node.js 14+
-- PostgreSQL 12+
-
-### Variáveis de Ambiente
-
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+O backend foi desenvolvido com a seguinte estrutura:
 
 ```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/equipamentos_medicos?schema=public"
-JWT_SECRET="seu_segredo_jwt"
-PORT=3001
-NODE_ENV="development"
-OPENAI_API_KEY="sua_chave_api_openai"
-TELEGRAM_BOT_TOKEN="seu_token_bot_telegram"
-WHATSAPP_API_KEY="sua_chave_api_whatsapp"
+/backend
+  /src
+    /controllers     # Controladores para cada entidade
+    /models          # Modelos de dados e interfaces
+    /routes          # Definição de rotas da API
+    /services        # Lógica de negócios
+    /middlewares     # Middlewares (autenticação, validação)
+    /utils           # Funções utilitárias
+    /config          # Configurações do sistema
+    /prisma          # Configuração do Prisma ORM
+      schema.prisma  # Schema do banco de dados
+      seed.ts        # Dados iniciais para o banco
+    server.ts        # Ponto de entrada da aplicação
+  package.json       # Dependências do backend
+  tsconfig.json      # Configuração do TypeScript
+  .env              # Variáveis de ambiente (não versionado)
+  .env.example      # Exemplo de variáveis de ambiente
+  api-docs.md        # Documentação da API
 ```
 
-### Instalação
+## Configuração Inicial
+
+1. Instale as dependências:
 
 ```bash
-# Instalar dependências
+cd backend
 npm install
-
-# Gerar Prisma Client
-npm run prisma:generate
-
-# Executar migrações do banco de dados
-npm run prisma:migrate
-
-# Compilar o projeto
-npm run build
+# ou
+pnpm install
 ```
 
-### Execução
+2. Configure as variáveis de ambiente:
 
 ```bash
-# Ambiente de desenvolvimento
+cp src/.env.example .env
+```
+
+3. Edite o arquivo `.env` com suas configurações:
+
+```
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="seu_jwt_secret_seguro"
+PORT=3001
+```
+
+4. Gere o cliente Prisma:
+
+```bash
+npx prisma generate
+```
+
+5. Crie o banco de dados e execute as migrações:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+6. Execute o seed para criar dados iniciais:
+
+```bash
+npx ts-node src/prisma/seed.ts
+```
+
+## Execução do Backend
+
+### Ambiente de Desenvolvimento
+
+```bash
 npm run dev
-
-# Ambiente de produção
-npm start
+# ou
+pnpm dev
 ```
 
-### Testes
+O servidor será iniciado na porta 3001 (ou na porta definida no arquivo .env).
+
+### Ambiente de Produção
+
+1. Compile o código TypeScript:
 
 ```bash
-# Executar testes
-npm test
+npm run build
+# ou
+pnpm build
 ```
+
+2. Execute o servidor:
+
+```bash
+npm start
+# ou
+pnpm start
+```
+
+## Integração com o Frontend
+
+Para integrar o backend com o frontend Next.js existente, siga estas etapas:
+
+1. Configure o frontend para acessar a API:
+
+   Crie ou edite um arquivo de configuração no frontend (por exemplo, `src/config/api.ts`):
+
+   ```typescript
+   export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+   ```
+
+2. Crie serviços para consumir a API:
+
+   Exemplo de serviço para equipamentos:
+
+   ```typescript
+   // src/services/equipment.service.ts
+   import { API_URL } from '../config/api';
+
+   export const getEquipments = async (token: string) => {
+     const response = await fetch(`${API_URL}/equipment`, {
+       headers: {
+         'Authorization': `Bearer ${token}`
+       }
+     });
+     return response.json();
+   };
+
+   export const getEquipmentById = async (id: number, token: string) => {
+     const response = await fetch(`${API_URL}/equipment/${id}`, {
+       headers: {
+         'Authorization': `Bearer ${token}`
+       }
+     });
+     return response.json();
+   };
+
+   // Adicione outros métodos conforme necessário
+   ```
+
+3. Utilize os serviços nos componentes do frontend:
+
+   ```typescript
+   import { useEffect, useState } from 'react';
+   import { getEquipments } from '../services/equipment.service';
+
+   const EquipmentList = () => {
+     const [equipments, setEquipments] = useState([]);
+     const [loading, setLoading] = useState(true);
+     const [error, setError] = useState(null);
+     
+     // Obter token do armazenamento local ou contexto de autenticação
+     const token = localStorage.getItem('token');
+
+     useEffect(() => {
+       const fetchEquipments = async () => {
+         try {
+           const data = await getEquipments(token);
+           setEquipments(data);
+         } catch (err) {
+           setError(err.message);
+         } finally {
+           setLoading(false);
+         }
+       };
+
+       fetchEquipments();
+     }, [token]);
+
+     // Renderização do componente
+   };
+   ```
+
+## Integração com Cloudflare D1
+
+Para utilizar o Cloudflare D1 em produção:
+
+1. Configure o Wrangler para usar o D1:
+
+   Edite o arquivo `wrangler.toml` para incluir a configuração do D1:
+
+   ```toml
+   [[d1_databases]]
+   binding = "DB"
+   database_name = "equipamentos_medicos_db"
+   database_id = "seu_database_id"
+   ```
+
+2. Adapte o Prisma para usar o D1:
+
+   Modifique o arquivo `schema.prisma` para usar o adaptador do D1:
+
+   ```prisma
+   datasource db {
+     provider = "sqlite"
+     url      = env("DATABASE_URL")
+   }
+   ```
+
+3. Execute as migrações no D1:
+
+   ```bash
+   wrangler d1 execute equipamentos_medicos_db --file ./prisma/migrations/migration.sql
+   ```
+
+## Usuários Padrão
+
+O seed cria dois usuários padrão para testes:
+
+1. Administrador:
+   - Email: admin@medequip.com
+   - Senha: admin123
+
+2. Técnico:
+   - Email: tecnico@medequip.com
+   - Senha: tecnico123
 
 ## Documentação da API
 
-A documentação completa da API está disponível em:
+A documentação completa da API está disponível no arquivo `api-docs.md`.
 
-```
-http://localhost:3001/api-docs
-```
+## Suporte e Manutenção
 
-## Próximos Passos
+Para suporte ou dúvidas sobre o backend, entre em contato com a equipe de desenvolvimento.
 
-- Implementar sistema de logs detalhados
-- Adicionar mais relatórios e estatísticas
-- Expandir funcionalidades de IA para análise preditiva de falhas
-- Implementar sistema de backup automático do banco de dados
+---
+
+Este backend foi desenvolvido para atender às necessidades do Sistema de Gerenciamento de Equipamentos Médicos, fornecendo uma API robusta e segura para o frontend existente.
