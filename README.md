@@ -1,128 +1,77 @@
-# Integração do Backend e Frontend
+# Backend do Sistema de Equipamentos Médicos
 
-Este projeto utiliza uma arquitetura integrada com:
+Este é o backend do Sistema de Equipamentos Médicos, desenvolvido com Node.js, Express, TypeScript e MongoDB.
 
-- **Frontend**: Next.js com React e TypeScript
-- **Backend**: Node.js/Express com TypeScript e Prisma ORM
-- **Banco de Dados**: Cloudflare D1 (SQLite na edge)
+## Requisitos
+
+- Node.js (versão 14 ou superior)
+- MongoDB (versão 4.4 ou superior)
+- npm ou yarn
+
+## Instalação
+
+1. Clone o repositório
+2. Navegue até a pasta do backend:
+```bash
+cd backend
+```
+
+3. Instale as dependências:
+```bash
+npm install
+```
+
+4. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+```
+PORT=3001
+MONGODB_URI=mongodb://localhost:27017/sistema-equipamentos-medicos
+JWT_SECRET=sua_chave_secreta_jwt
+NODE_ENV=development
+```
+
+## Executando o Projeto
+
+Para desenvolvimento:
+```bash
+npm run dev
+```
+
+Para produção:
+```bash
+npm run build
+npm start
+```
+
+## Endpoints da API
+
+### Equipamentos
+
+- `GET /api/equipamentos` - Lista todos os equipamentos
+- `GET /api/equipamentos/:id` - Busca um equipamento específico
+- `POST /api/equipamentos` - Cria um novo equipamento
+- `PUT /api/equipamentos/:id` - Atualiza um equipamento
+- `DELETE /api/equipamentos/:id` - Remove um equipamento
+- `GET /api/equipamentos/status/:status` - Busca equipamentos por status
 
 ## Estrutura do Projeto
 
 ```
-/MedEquip
-  /src                  # Código-fonte do frontend (Next.js)
-    /app                # Rotas e componentes de página
-    /components         # Componentes React reutilizáveis
-    /hooks              # React hooks personalizados
-    /lib                # Utilitários e funções auxiliares
-      api.ts            # Funções centralizadas para chamadas de API
-  /backend              # Código-fonte do backend (Node.js/Express)
-    /controllers        # Controladores para cada entidade
-    /routes             # Definição de rotas da API
-    /middlewares        # Middlewares (autenticação, validação)
-    /prisma             # Configuração do Prisma ORM
-    server.ts           # Ponto de entrada do backend
-  .env.local            # Variáveis de ambiente para o frontend
-  package.json          # Dependências do frontend
+src/
+  ├── controllers/     # Controladores da aplicação
+  ├── models/         # Modelos do MongoDB
+  ├── routes/         # Rotas da API
+  ├── middlewares/    # Middlewares
+  ├── config/         # Configurações
+  ├── services/       # Serviços
+  └── server.ts       # Arquivo principal
 ```
 
-## Como Executar o Projeto
+## Tecnologias Utilizadas
 
-### Pré-requisitos
-
-- Node.js (versão 16 ou superior)
-- npm, yarn ou pnpm
-
-### Configuração
-
-1. **Instalar dependências do frontend:**
-
-```bash
-# Na raiz do projeto
-npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
-
-2. **Instalar dependências do backend:**
-
-```bash
-# Na pasta backend
-cd backend
-npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
-
-3. **Configurar variáveis de ambiente:**
-
-Para o frontend, crie ou edite o arquivo `.env.local` na raiz do projeto:
-```
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
-```
-
-Para o backend, crie ou edite o arquivo `.env` na pasta `backend`:
-```
-DATABASE_URL="file:./dev.db"
-JWT_SECRET="seu_jwt_secret_seguro"
-PORT=3001
-```
-
-4. **Configurar o banco de dados:**
-
-```bash
-# Na pasta backend
-cd backend
-npx prisma generate
-npx prisma migrate dev --name init
-npx ts-node prisma/seed.ts
-```
-
-### Executar o Projeto
-
-1. **Iniciar o backend:**
-
-```bash
-# Na pasta backend
-cd backend
-npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-```
-
-O servidor backend estará disponível em `http://localhost:3001/api`.
-
-2. **Iniciar o frontend:**
-
-```bash
-# Na raiz do projeto
-npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-```
-
-O frontend estará disponível em `http://localhost:3000`.
-
-## Autenticação
-
-O sistema utiliza autenticação JWT. Os usuários padrão criados pelo seed são:
-
-- **Administrador**:
-  - Email: admin@medequip.com
-  - Senha: admin123
-
-- **Técnico**:
-  - Email: tecnico@medequip.com
-  - Senha: tecnico123
-
-## Documentação da API
-
-A documentação completa da API está disponível no arquivo `backend/api-docs.md`.
+- Node.js
+- Express
+- TypeScript
+- MongoDB
+- Mongoose
+- Cors
+- Dotenv 
